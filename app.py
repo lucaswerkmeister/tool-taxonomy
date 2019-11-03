@@ -135,8 +135,11 @@ def load_taxon(item_id):
                          ids=[item_id],
                          props=['claims'])
     entity = result['entities'][item_id]
-    taxon_name_statement = entity['claims']['P225'][0]
-    taxon_name = taxon_name_statement['mainsnak']['datavalue']['value']
+    try:
+        taxon_name_statement = entity['claims']['P225'][0]
+        taxon_name = taxon_name_statement['mainsnak']['datavalue']['value']
+    except KeyError:
+        taxon_name = item_id
     parent_taxon_statements = entity['claims'].get('P171', [])
     parent_taxon_item_ids = {'preferred': [], 'normal': []}
     for parent_taxon_statement in parent_taxon_statements:
