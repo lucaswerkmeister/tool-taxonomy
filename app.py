@@ -116,6 +116,7 @@ def taxon(item_id):
     print(tree)
     return flask.render_template('taxon.html',
                                  taxon_name=taxon_name,
+                                 item_id=item_id,
                                  tree=tree)
 
 def load_taxon_tree(item_id):
@@ -125,7 +126,7 @@ def load_taxon_tree(item_id):
     d = {}
     for parent_taxon_item_id in parent_taxon_item_ids:
         parent_taxon_item_name, tree = load_taxon_tree(parent_taxon_item_id)
-        d[parent_taxon_item_name] = tree
+        d[parent_taxon_item_name] = (parent_taxon_item_id, tree)
     flask.g.setdefault('tree_cache', {})[item_id] = taxon_name, d
     return taxon_name, d
 

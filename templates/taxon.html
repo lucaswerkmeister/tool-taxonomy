@@ -1,17 +1,19 @@
 {% extends "base.html" %}
 {% block main %}
-{% macro render_tree(taxon_name, tree) %}
+{% macro render_tree(taxon_name, item_id, tree) %}
 <li>
-  {{ taxon_name }}
+  <a href="https://www.wikidata.org/wiki/{{ item_id }}">
+    {{ taxon_name }}
+  </a>
   {% if tree %}
   <ol>
-    {% for taxon_name, subtree in tree.items() %}
-    {{ render_tree(taxon_name, subtree) }}
+    {% for taxon_name, (item_id, subtree) in tree.items() %}
+    {{ render_tree(taxon_name, item_id, subtree) }}
     {% endfor %}
   </ol>
   {% else %}
   {% endif %}
 </li>
 {% endmacro %}
-{{ render_tree(taxon_name, tree) }}
+{{ render_tree(taxon_name, item_id, tree) }}
 {% endblock %}
