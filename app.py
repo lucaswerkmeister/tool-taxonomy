@@ -148,8 +148,9 @@ def load_taxon(item_id):
         if parent_taxon_mainsnak['snaktype'] == 'value':
             parent_taxon_item_id = parent_taxon_mainsnak['datavalue']['value']['id']
             parent_taxon_item_ids[parent_taxon_rank].append(parent_taxon_item_id)
-    return taxon_name, (parent_taxon_item_ids['preferred'] or
-                        parent_taxon_item_ids['normal'])
+    best_parent_taxon_item_ids = (parent_taxon_item_ids['preferred'] or
+                                  parent_taxon_item_ids['normal'])
+    return taxon_name, best_parent_taxon_item_ids
 
 
 @app.route('/')
