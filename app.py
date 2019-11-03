@@ -138,12 +138,15 @@ def load_taxon(item_id):
     taxon_name_statement = entity['claims']['P225'][0]
     taxon_name = taxon_name_statement['mainsnak']['datavalue']['value']
     parent_taxon_statements = entity['claims'].get('P171', [])
-    parent_taxon_item_ids = []
+    parent_taxon_item_ids = {'preferred': [], 'normal': []}
     for parent_taxon_statement in parent_taxon_statements:
+        parent_taxon_rank = parent_taxon_statement['rank']
         parent_taxon_mainsnak = parent_taxon_statement['mainsnak']
         if parent_taxon_mainsnak['snaktype'] == 'value':
-            parent_taxon_item_ids.append(parent_taxon_mainsnak['datavalue']['value']['id'])
-    return taxon_name, parent_taxon_item_ids
+            parent_taxon_item_id = parent_taxon_mainsnak['datavalue']['value']['id']
+            parent_taxon_item_ids[parent_taxon_rank].append(parent_taxon_item_id)
+    return taxon_name, (parent_taxon_item_ids['preferred'] or
+                        parent_taxon_item_ids['normal'])
 
 
 @app.route('/')
