@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block main %}
+{% macro render_tree(taxon_name, tree) %}
+<li>
+  {{ taxon_name }}
+  {% if tree %}
+  <ol>
+    {% for taxon_name, subtree in tree.items() %}
+    {{ render_tree(taxon_name, subtree) }}
+    {% endfor %}
+  </ol>
+  {% else %}
+  {% endif %}
+</li>
+{% endmacro %}
+{{ render_tree(taxon_name, tree) }}
+{% endblock %}
