@@ -113,7 +113,6 @@ def authenticated_session():
 @app.route('/taxon/<item_id>')
 def taxon(item_id):
     taxon_name, tree = load_taxon_tree(item_id)
-    print(tree)
     return flask.render_template('taxon.html',
                                  taxon_name=taxon_name,
                                  item_id=item_id,
