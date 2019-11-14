@@ -153,18 +153,6 @@ def submitted_request_valid():
     return True
 
 
-# If you don’t want to handle CSRF protection in every POST handler,
-# you can instead uncomment the @app.before_request decorator
-# on the following function,
-# which will raise a very generic error for any invalid POST.
-# Otherwise, you can remove the whole function.
-# @app.before_request
-def require_valid_submitted_request():
-    if flask.request.method == 'POST' and not submitted_request_valid():
-        return 'CSRF error', 400  # stop request handling
-    return None  # continue request handling
-
-
 @app.after_request
 def deny_frame(response):
     """Disallow embedding the tool’s pages in other websites.
