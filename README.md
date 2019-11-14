@@ -1,38 +1,13 @@
 # Taxonomy
 
-[This tool](https://tools.wmflabs.org/taxonomy/) does things.
-
-For more information,
-please see the tool’s [on-wiki documentation page](https://www.wikidata.org/wiki/User:Lucas_Werkmeister/Taxonomy).
-
-## Toolforge setup
-
-On Wikimedia Toolforge, this tool runs under the `taxonomy` tool name.
-Source code resides in `~/www/python/src/`,
-a virtual environment is set up in `~/www/python/venv/`,
-logs end up in `~/uwsgi.log`.
-
-If the web service is not running for some reason, run the following command:
-```
-webservice --backend=kubernetes python3.5 start
-```
-If it’s acting up, try the same command with `restart` instead of `start`.
-
-To update the service, run the following commands after becoming the tool account:
-```
-webservice --backend=kubernetes python3.5 shell
-source ~/www/python/venv/bin/activate
-cd ~/www/python/src
-git fetch
-git diff @ @{u} # inspect changes
-git merge --ff-only @{u}
-pip3 install -r requirements.txt
-webservice --backend=kubernetes python3.5 restart
-```
+This is a rudimentary tool for displaying the “parent taxon” statements of an item in a tree.
+It was built during the [Wikidata Zurich Training event](https://www.wikidata.org/wiki/Wikidata:Events/Wikidata_Zurich_Training2019) (2019-11-03)
+as a demonstration for how to create a tool.
+It is not deployed on Toolforge, and I have no further plans for it.
 
 ## Local development setup
 
-You can also run the tool locally, which is much more convenient for development
+You can run the tool locally, which is very convenient for development
 (for example, Flask will automatically reload the application any time you save a file).
 
 ```
